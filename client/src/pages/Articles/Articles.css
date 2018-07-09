@@ -5,6 +5,7 @@ form {
     border-style: solid;
     border-width: 1px;
     border-color: cornflowerblue;
+    background-color: white;
 }
 
 form > h2 {
