@@ -1,0 +1,8 @@
+.jumbotron {
+    background-color: cornsilk;
+    /* color: cornflowerblue; */
+    text-align: center;
+    border: solid;
+    border-width: 3px;
+    border-color: cornflowerblue;
+}
