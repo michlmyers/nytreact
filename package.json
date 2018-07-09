@@ -1,16 +1,21 @@
 {
   "name": "nytreact",
   "version": "0.1.0",
-  "private": true,
+  "main": "server.js",
   "dependencies": {
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
-    "react-scripts": "1.1.4"
+    "axios": "^0.16.2",
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
+    "mongoose": "^4.11.7"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "debug": "concurrently \"node --inspect-brk=43240 server.js\" \"npm run client\"",
+    "start": "if-env NODE_ENV=production && npm run server || npm run start:dev",
+    "server": "node server.js",
+    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
+    "seed": "node scripts/seedDB.js",
+    "client": "cd client && npm run start",
+    "install": "cd client && yarn install",
+    "build": "cd client && npm run build"
   }
 }

@@ -7,6 +7,9 @@ class Articles extends React.Component {
         super(props);
         this.state = {
             articles: [],
+            term: "",
+            startYear: "",
+            endYear: "",
             title: "",
             date: "",
             url: ""
@@ -21,13 +24,25 @@ class Articles extends React.Component {
         API.getArticles()
             .then(res => this.setState({ articles: res.data.message }))
             .catch(err => console.log(err));
-    }
+    };
 
     // need to finish this function 
     handleInputChange = event => {
-        this.setState({})
-    }
+        this.setState({ search: event.target.value});
+    };
 
+    handleFormSubmit = event => {
+        event.preventDefault();
+        if (this.state.term) {
+        API.getTopicArticles({
+            term: this.state.term,
+            startYear: this.state.startYear,
+            endYear: this.state.endYear
+        })
+        .then(res => this.loadArticles())
+        .catch(err => console.log(err));
+        }
+    }
     // need to add a form submit function here 
 
 
