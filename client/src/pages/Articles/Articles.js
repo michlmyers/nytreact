@@ -56,7 +56,9 @@ class Articles extends React.Component {
                 <Row>
                     <Col size='md-10'>
                         <Jumbotron>
-                            <h1>NY Times Article Search!</h1>
+                            <h1>
+                            <i class="far fa-newspaper"></i> <br />
+                            NY Times Article Search!</h1>
                             <h2>Search a topic and save articles of interest</h2>
                         </Jumbotron>
                     </Col>
@@ -64,21 +66,27 @@ class Articles extends React.Component {
                 <Row>
                     <Col size='md-10'>
                         <form>
-                            <h2>Start your search</h2>
+                            <h2>Start your search &nbsp;
+                            <i class="fas fa-search"></i>
+                            </h2>
                             <Input
                                 value={this.state.term}
                                 onChange={this.handleInputChange}
                                 name='term'
                                 placeholder='Search term (required)'
                             />
-                            <h2>Start Year</h2>
+                            <h2>Start Year &nbsp;
+                            <i class="far fa-calendar-alt"></i>
+                            </h2>
                             <Input
                                 value={this.state.startYear}
                                 onChange={this.handleInputChange}
                                 name='startYear'
                                 placeholder='Start year (optional)'
                             />
-                            <h2>End year</h2>
+                            <h2>End year &nbsp;
+                            <i class="far fa-calendar-alt"></i>
+                            </h2>
                             <Input
                                 value={this.state.endYear}
                                 onChange={this.handleInputChange}

@@ -10,5 +10,8 @@ export default {
     },
     getArticles: function() {
         return axios.get('/api/articles');
+    },
+    saveArticle: function() {
+        return axios.post('/api/articles');
     }
 };
