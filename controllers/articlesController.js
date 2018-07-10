@@ -4,6 +4,7 @@ const db = require('../models');
 
 const articleFunctions = {
     findAll: function (req, res) {
+        console.log("here")
         db.Article
             .find(req.query)
             .sort({ date: -1 })
