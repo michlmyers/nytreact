@@ -4,12 +4,14 @@ import { Col, Row, Container } from '../../components/Grid';
 import API from '../../utils/API';
 import { Input, FormBtn } from '../../components/Form';
 import './Articles.css';
+import Results from '../Results';
 
 class Articles extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             articles: [],
+            results: [],
             term: "",
             startYear: "",
             endYear: "",
@@ -37,18 +39,19 @@ class Articles extends React.Component {
 
     handleFormSubmit = event => {
         event.preventDefault();
-        if (this.state.term) {
-            API.getTopicArticles({
-                term: this.state.term,
-                startYear: this.state.startYear,
-                endYear: this.state.endYear
-            })
-                .then(res => this.loadArticles())
-                .catch(err => console.log(err));
+        console.log('this is working');
+        if (this.state.term && this.state.startYear && this.state.endYear) {
+            API.getTopicArticles(this.state.term, this.state.startYear, this.state.endYear)
+            .then(res => {
+                if (res.data.status === "error") {
+                  throw new Error(res.data.message);
+                }
+                this.setState({ results: res.data.message, error: "" });
+                console.log(res.data);
+              })
+              .catch(err => this.setState({ error: err.message }));
         }
     }
-    // need to add a form submit function here 
-
 
     render() {
         return (
@@ -85,7 +88,7 @@ class Articles extends React.Component {
                                 value={this.state.startYear}
                                 onChange={this.handleInputChange}
                                 name='startYear'
-                                placeholder='Start year (optional)'
+                                placeholder='Start year (required)'
                             />
                             <h2>End year &nbsp;
                             <i class="far fa-calendar-alt"></i>
@@ -94,7 +97,7 @@ class Articles extends React.Component {
                                 value={this.state.endYear}
                                 onChange={this.handleInputChange}
                                 name='endYear'
-                                placeholder='End year (optional)'
+                                placeholder='End year (required)'
                             />
                             <FormBtn 
                             disabled={!(this.state.term)}
@@ -105,6 +108,8 @@ class Articles extends React.Component {
                         </form>
                     </Col>
                 </Row>
+                <br/>
+                <Results results={this.state.results} />
             </Container>
         );
     }

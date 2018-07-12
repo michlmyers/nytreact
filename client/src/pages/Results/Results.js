@@ -4,6 +4,7 @@ import API from '../../utils/API';
 import './Results.css';
 import { List, ListItem } from '../../components/List';
 import SaveBtn from '../../components/SaveBtn';
+import PropTypes from 'prop-types';
 
 class Results extends React.Component {
     constructor(props) {
@@ -28,6 +29,8 @@ class Results extends React.Component {
     };
 
     render() {
+        const { articles } = this.props
+
         return (
             <Container fluid>
                 <Row>
@@ -39,8 +42,9 @@ class Results extends React.Component {
                             </h2>
                             {this.state.articles.length ? (
                             <List>
-                                {this.state.articles.map(article => {
+                                {articles.map(article => {
                                 return (
+                                    console.log('do we make it here?'),
                                     <ListItem key={article._id}>
                                     <p>{article.title}</p>
                                     <p>{article.date}</p>
@@ -50,18 +54,22 @@ class Results extends React.Component {
                                 );    
                                 })}
                             </List>    
-                            ) : (
+                              ) : ( 
                                 <h3>Sorry - no articles!
                                     &nbsp;
                                     <i class="fas fa-exclamation-triangle"></i>
                                 </h3>
-                            )}
+                            )} 
                         </div>     
                     </Col>
                 </Row>
             </Container>
         );
     }
+}
+
+Results.props = {
+    articles: PropTypes.array
 }
 
 export default Results;
