@@ -10,14 +10,12 @@ class Results extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            articles: [],
-            term: "",
-            startYear: "",
-            endYear: "",
-            title: "",
-            date: "",
-            url: ""
+            results: [],
         };
+    }
+
+    onPageLoad = () => {
+        console.log('this page has loaded!');
     }
 
     saveArticle = () => {
@@ -29,7 +27,7 @@ class Results extends React.Component {
     };
 
     render() {
-        const { articles } = this.props
+        const { results } = this.props
 
         return (
             <Container fluid>
@@ -40,9 +38,10 @@ class Results extends React.Component {
                             Search Results! &nbsp;
                             <i class="far fa-list-alt"></i> 
                             </h2>
-                            {this.state.articles.length ? (
+                            {this.state.results.length ? (
+
                             <List>
-                                {articles.map(article => {
+                                {results.map(article => {
                                 return (
                                     console.log('do we make it here?'),
                                     <ListItem key={article._id}>
@@ -69,7 +68,7 @@ class Results extends React.Component {
 }
 
 Results.props = {
-    articles: PropTypes.array
+    results: PropTypes.array
 }
 
 export default Results;

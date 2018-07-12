@@ -4,7 +4,7 @@ import { Col, Row, Container } from '../../components/Grid';
 import API from '../../utils/API';
 import { Input, FormBtn } from '../../components/Form';
 import './Articles.css';
-import Results from '../Results';
+import Results from '../../components/Results';
 
 class Articles extends React.Component {
     constructor(props) {
@@ -15,9 +15,6 @@ class Articles extends React.Component {
             term: "",
             startYear: "",
             endYear: "",
-            title: "",
-            date: "",
-            url: ""
         };
     }
 
@@ -38,6 +35,7 @@ class Articles extends React.Component {
     };
 
     handleFormSubmit = event => {
+        let results = [];
         event.preventDefault();
         console.log('this is working');
         if (this.state.term && this.state.startYear && this.state.endYear) {
@@ -46,8 +44,10 @@ class Articles extends React.Component {
                 if (res.data.status === "error") {
                   throw new Error(res.data.message);
                 }
-                this.setState({ results: res.data.message, error: "" });
+                // this.setState({ results: res.data.message, error: "" });
+                this.setState({ results: res.data.message, error: ""  });
                 console.log(res.data);
+                results.push(res.data);
               })
               .catch(err => this.setState({ error: err.message }));
         }
@@ -109,7 +109,7 @@ class Articles extends React.Component {
                     </Col>
                 </Row>
                 <br/>
-                <Results results={this.state.results} />
+                <Results save={this.save} results={this.state.results} />
             </Container>
         );
     }
