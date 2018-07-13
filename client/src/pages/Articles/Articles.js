@@ -35,7 +35,6 @@ class Articles extends React.Component {
     };
 
     handleFormSubmit = event => {
-        let results = [];
         event.preventDefault();
         console.log('this is working');
         if (this.state.term && this.state.startYear && this.state.endYear) {
@@ -45,9 +44,8 @@ class Articles extends React.Component {
                   throw new Error(res.data.message);
                 }
                 // this.setState({ results: res.data.message, error: "" });
-                this.setState({ results: res.data.message, error: ""  });
+                this.setState({ results: res.data.response.docs, error: ""  });
                 console.log(res.data);
-                results.push(res.data);
               })
               .catch(err => this.setState({ error: err.message }));
         }

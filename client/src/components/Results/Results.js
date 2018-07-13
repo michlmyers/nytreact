@@ -14,14 +14,10 @@ class Results extends React.Component {
         };
     }
 
-    onPageLoad = () => {
-        console.log('this page has loaded!');
-    }
-
     saveArticle = () => {
         API.saveArticle()
-        // currently just copiued from other functions to compile app
-        // MIKE YOU NEED TO UPDATE THIS !!!!!!!!!!!!!!
+            // currently just copiued from other functions to compile app
+            // MIKE YOU NEED TO UPDATE THIS !!!!!!!!!!!!!!
             .then(res => this.setState({ articles: res.data.message }))
             .catch(err => console.log(err));
     };
@@ -35,31 +31,34 @@ class Results extends React.Component {
                     <Col size='md-10'>
                         <div className='resultsDiv'>
                             <h2>
-                            Search Results! &nbsp;
-                            <i class="far fa-list-alt"></i> 
+                                Search Results! &nbsp;
+                            <i class="far fa-list-alt"></i>
                             </h2>
-                            {this.state.results.length ? (
-
-                            <List>
-                                {results.map(article => {
-                                return (
-                                    console.log('do we make it here?'),
-                                    <ListItem key={article._id}>
-                                    <p>{article.title}</p>
-                                    <p>{article.date}</p>
-                                    <p><a href={article.url}> {article.url} </a></p>
-                                    <SaveBtn onClick={() => this.saveArticle(article._id)} />
-                                    </ListItem>
-                                );    
-                                })}
-                            </List>    
-                              ) : ( 
-                                <h3>Sorry - no articles!
-                                    &nbsp;
+                            {results.length ? (
+                                <List>
+                                    {results.map(result =>
+                                        (console.log('do we make it here?'),
+                                            console.log(results.length),
+                                            console.log(results),
+                                            console.log(results[0].web_url),
+                                            console.log(results[0].pub_date),
+                                            console.log(results[0].headline.main),
+                                            <ListItem key={result._id}>
+                                                <p>{(result.headline.main)}</p>
+                                                <p>{(result.pub_date)}</p>
+                                                <p><a href={(result.web_url)}> {(result.web_url)} </a></p>
+                                                <SaveBtn onClick={() => this.saveArticle(result._id)} />
+                                            </ListItem>
+                                        )
+                                    )}
+                                </List>
+                            ) : (
+                                    <h3>Sorry - no articles!
+                                        &nbsp;
                                     <i class="fas fa-exclamation-triangle"></i>
-                                </h3>
-                            )} 
-                        </div>     
+                                    </h3>
+                                )}
+                        </div>
                     </Col>
                 </Row>
             </Container>
