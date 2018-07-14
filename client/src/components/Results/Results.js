@@ -18,11 +18,17 @@ class Results extends React.Component {
     saveArticle(event) {
         event.preventDefault();
         // let articleData = {title: this.article.headline.main, date: this.article.pub_date, url: this.article.web_url}
-        let articleData = this.props.results;
-        API.saveArticle(articleData)
-            .then(console.log('this is stuff: ' + articleData))
+        // console.log('this is results maybe? ' + JSON.stringify(this.props.results[0]));
+        // console.log('this can be article info ' + this.props.article._id);
+        console.log('value log: ' + this.key);
+        // let index = parseInt(event.target.value)
+        API.saveArticle().then((data) => {
+            console.log('this is here');
+        })
+            
+            // .then(console.log('this is stuff: ' + articleData))
             // .then(res => this.setState({ articles: res.data.message }))
-            .catch(err => console.log(err));
+            // .catch(err => console.log(err));
     };
 
     render() {
@@ -41,6 +47,7 @@ class Results extends React.Component {
                                 <List>
                                     {results.map(article =>
                                             <ListItem key={article._id}>
+                                            <p>{article._id}</p>
                                                 <p>{(article.headline.main)}</p>
                                                 <p>{(article.pub_date)}</p>
                                                 <p><a href={(article.web_url)}> {(article.web_url)} </a></p>

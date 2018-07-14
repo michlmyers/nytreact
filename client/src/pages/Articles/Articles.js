@@ -14,7 +14,7 @@ class Articles extends React.Component {
             results: [],
             term: "",
             startYear: "",
-            endYear: "",
+            endYear: ""
         };
     }
 
