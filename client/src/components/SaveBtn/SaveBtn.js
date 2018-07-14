@@ -5,9 +5,9 @@ class SaveBtn extends React.Component {
 
     render () {
         return (
-            <span className='save-btn' onClick={this.props.onClick}>
+            <button className='btn btn-warning' onClick={this.props.onClick}>
             Save this article
-            </span>
+            </button>
         );
     }
 }

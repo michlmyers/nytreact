@@ -10,15 +10,18 @@ class Results extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            results: [],
+            results: []            
         };
-    }
+        this.saveArticle = this.saveArticle.bind(this);
+    };
 
-    saveArticle = () => {
-        API.saveArticle()
-            // currently just copiued from other functions to compile app
-            // MIKE YOU NEED TO UPDATE THIS !!!!!!!!!!!!!!
-            .then(res => this.setState({ articles: res.data.message }))
+    saveArticle(event) {
+        event.preventDefault();
+        // let articleData = {title: this.article.headline.main, date: this.article.pub_date, url: this.article.web_url}
+        let articleData = this.props.results;
+        API.saveArticle(articleData)
+            .then(console.log('this is stuff: ' + articleData))
+            // .then(res => this.setState({ articles: res.data.message }))
             .catch(err => console.log(err));
     };
 
@@ -36,21 +39,15 @@ class Results extends React.Component {
                             </h2>
                             {results.length ? (
                                 <List>
-                                    {results.map(result =>
-                                        (console.log('do we make it here?'),
-                                            console.log(results.length),
-                                            console.log(results),
-                                            console.log(results[0].web_url),
-                                            console.log(results[0].pub_date),
-                                            console.log(results[0].headline.main),
-                                            <ListItem key={result._id}>
-                                                <p>{(result.headline.main)}</p>
-                                                <p>{(result.pub_date)}</p>
-                                                <p><a href={(result.web_url)}> {(result.web_url)} </a></p>
-                                                <SaveBtn onClick={() => this.saveArticle(result._id)} />
+                                    {results.map(article =>
+                                            <ListItem key={article._id}>
+                                                <p>{(article.headline.main)}</p>
+                                                <p>{(article.pub_date)}</p>
+                                                <p><a href={(article.web_url)}> {(article.web_url)} </a></p>
+                                                {/* <SaveBtn onClick={() => this.saveArticle(article._id)} /> */}
+                                                <SaveBtn onClick={this.saveArticle} />
                                             </ListItem>
-                                        )
-                                    )}
+                                        )}
                                 </List>
                             ) : (
                                     <h3>Sorry - no articles!
