@@ -1,10 +1,11 @@
 import React from 'react';
-import Jumbotron from '../../components/Jumbotron';
+// import Jumbotron from '../../components/Jumbotron';
 import { Col, Row, Container } from '../../components/Grid';
 import API from '../../utils/API';
 import { Input, FormBtn } from '../../components/Form';
 import './Articles.css';
-import Results from '../../components/Results';
+import SaveBtn from '../../components/SaveBtn';
+import { List, ListItem } from '../../components/List';
 
 class Articles extends React.Component {
     constructor(props) {
@@ -34,6 +35,19 @@ class Articles extends React.Component {
         this.setState({ [name]: value });
     };
 
+    handleSaveArticle = (title, date, url, event) => {
+        event.preventDefault();
+        console.log("We make it here");
+          API.saveArticle({
+            title: title,
+            date: date,
+            url: url
+          })
+            .then(res => console.log("saved the article"))
+            .catch(err => console.log(err));
+      };
+    
+
     handleFormSubmit = event => {
         event.preventDefault();
         console.log('this is working');
@@ -54,19 +68,7 @@ class Articles extends React.Component {
     render() {
         return (
             <Container fluid>
-                <Row>
-                    <Col size='md-10'>
 
-                        <Jumbotron>
-                            <div class="shadow-lg p-3 mb-5 bg-white rounded">
-                            <h1>
-                            <i class="far fa-newspaper"></i> <br />
-                            NY Times Article Search!</h1>
-                            </div> 
-                            <h3>Search a topic and save articles of interest</h3>
-                        </Jumbotron>   
-                    </Col>
-                </Row>
                 <Row>
                     <Col size='md-10'>
                         <form>
@@ -107,7 +109,45 @@ class Articles extends React.Component {
                     </Col>
                 </Row>
                 <br/>
-                <Results save={this.save} results={this.state.results} />
+                {/* <Results save={this.save} results={this.state.results} /> */}
+                {/* Going to add a bunch of code below to try and get the results to save in page instead of from an external component */}
+                <Row>
+                    <Col size='md-10'>
+                        <div className='resultsDiv'>
+                            <h2>
+                                Search Results! &nbsp;
+                            <i class="far fa-list-alt"></i>
+                            </h2>
+                            {this.state.results.length ? (
+                                  <div className="panel panel-primary">
+                                  <div className="panel-body">
+                                <List>
+                                    {this.state.results.map(article =>
+                                            <ListItem 
+                                            key={article._id}
+                                            title={article.headline.main}
+                                            date={article.pub_date}
+                                            url={article.web_url}
+                                            >
+                                                    <p>{(article.headline.main)}</p>
+                                                <p>{(article.pub_date)}</p>
+                                                <p><a href={(article.web_url)}> {(article.web_url)} </a></p>
+                                                <SaveBtn onClick={(event) => this.handleSaveArticle(article.headline.main, article.pub_date, article.web_url, event)} />
+                                            </ListItem>
+                                        )}
+                                </List>
+                                </div>
+                                </div>
+                            ) : (
+                                    <h3>Sorry - no articles!
+                                        &nbsp;
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    </h3>
+                                )}
+                        </div>
+                    </Col>
+                </Row>
+
             </Container>
         );
     }
