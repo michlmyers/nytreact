@@ -1,5 +1,4 @@
 import React from 'react';
-// import Jumbotron from '../../components/Jumbotron';
 import { Col, Row, Container } from '../../components/Grid';
 import API from '../../utils/API';
 import { Input, FormBtn } from '../../components/Form';
@@ -56,7 +55,6 @@ class Articles extends React.Component {
                     if (res.data.status === "error") {
                         throw new Error(res.data.message);
                     }
-                    // this.setState({ results: res.data.message, error: "" });
                     this.setState({ results: res.data.response.docs, error: "" });
                     console.log(res.data);
                 })
@@ -108,8 +106,6 @@ class Articles extends React.Component {
                     </Col>
                 </Row>
                 <br />
-                {/* <Results save={this.save} results={this.state.results} /> */}
-                {/* Going to add a bunch of code below to try and get the results to save in page instead of from an external component */}
                 <Row>
                     <Col size='md-10'>
                         <div className='resultsDiv'>
