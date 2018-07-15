@@ -11,13 +11,15 @@ export default {
         return axios.get(queryURL);
     },
     getArticles: function() {
+        // return all saved articles
         return axios.get('/api/articles');
     },
     saveArticle: function(articleData) {
+        // problems here 
         console.log('here is some data: ' + articleData);
-        return axios.post('api/articles', articleData);
+        return axios.post('/api/articles', articleData);
     },
     deleteArticle: function(id) {
-        return axios.delete('/api/articles' + id);
+        return axios.delete('/api/articles/' + id);
     }
 };

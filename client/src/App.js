@@ -14,7 +14,7 @@ const App = () => (
       <Route exact path='/' component={Articles} />
       <Route path='/api/articles' component={Articles} />
       <br/>
-      <Route path='/api/articles' component={Saved} />
+      <Route path='/api/saved' component={Saved} />
       <Route component={NoMatch} />
       </Switch>
       </Router>

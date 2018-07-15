@@ -5,7 +5,7 @@ import './Saved.css';
 import { List, ListItem } from '../../components/List';
 import DeleteBtn from '../../components/DeleteBtn';
 
-class Results extends React.Component {
+class Search extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -19,15 +19,19 @@ class Results extends React.Component {
         };
     }
 
+    componentDidMount() {
+        this.loadArticles();
+    }
+
     loadArticles = () => {
         API.getArticles()
-            .then(res => this.setState({ articles: res.data.message }))
+            .then(res => this.setState({ articles: res.data }))
             .catch(err => console.log(err));
     };
 
-    deleteArticle = id => {
+    deleteThisArticle = id => {
         API.deleteArticle(id)
-            .then(res => this.getArticles())
+            .then(res => this.loadArticles())
             .catch(err => console.log(err));
     };
 
@@ -38,31 +42,31 @@ class Results extends React.Component {
                     <Col size='md-10'>
                         <div className='resultsDiv'>
                             <h2>
-                            Saved Articles! &nbsp;
+                                Saved Articles! &nbsp;
                             <i class="fas fa-bookmark"></i>
                             </h2>
                             {this.state.articles.length ? (
-                            <List>
-                                {this.state.articles.map(article => {
-                                return (
-                                    <ListItem key={article._id}>
-                                    <a href={'/articles' + article._id}>
-                                    <p>{article.title}</p>
-                                    <p>{article.date}</p>
-                                    <p>{article.url}</p>
-                                    </a>
-                                    <DeleteBtn onClick={() => this.deleteArticle(article._id)} />
-                                    </ListItem>
-                                );    
-                                })}
-                            </List>    
+                                <List>
+                                    {this.state.articles.map(article => {
+                                        return (
+                                            <ListItem key={article._id}>
+                                                <a href={'/articles' + article._id}>
+                                                    <p>{article.title}</p>
+                                                    <p>{article.date}</p>
+                                                    <p>{article.url}</p>
+                                                </a>
+                                                <DeleteBtn onClick={() => this.deleteThisArticle(article._id)} />
+                                            </ListItem>
+                                        );
+                                    })}
+                                </List>
                             ) : (
-                                <h3>No saved articles!
-                                    &nbsp;
+                                    <h3>No saved articles!
+                                        &nbsp;
                                     <i class="fas fa-exclamation-triangle"></i>
-                                </h3>
-                            )}
-                        </div>     
+                                    </h3>
+                                )}
+                        </div>
                     </Col>
                 </Row>
             </Container>
@@ -70,4 +74,4 @@ class Results extends React.Component {
     }
 }
 
-export default Results;
+export default Search;
