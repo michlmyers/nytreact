@@ -38,30 +38,29 @@ class Articles extends React.Component {
     handleSaveArticle = (title, date, url, event) => {
         event.preventDefault();
         console.log("We make it here");
-          API.saveArticle({
+        API.saveArticle({
             title: title,
             date: date,
             url: url
-          })
+        })
             .then(res => console.log("saved the article"))
             .catch(err => console.log(err));
-      };
-    
+    };
+
 
     handleFormSubmit = event => {
         event.preventDefault();
-        console.log('this is working');
         if (this.state.term && this.state.startYear && this.state.endYear) {
             API.getTopicArticles(this.state.term, this.state.startYear, this.state.endYear)
-            .then(res => {
-                if (res.data.status === "error") {
-                  throw new Error(res.data.message);
-                }
-                // this.setState({ results: res.data.message, error: "" });
-                this.setState({ results: res.data.response.docs, error: ""  });
-                console.log(res.data);
-              })
-              .catch(err => this.setState({ error: err.message }));
+                .then(res => {
+                    if (res.data.status === "error") {
+                        throw new Error(res.data.message);
+                    }
+                    // this.setState({ results: res.data.message, error: "" });
+                    this.setState({ results: res.data.response.docs, error: "" });
+                    console.log(res.data);
+                })
+                .catch(err => this.setState({ error: err.message }));
         }
     }
 
@@ -99,16 +98,16 @@ class Articles extends React.Component {
                                 name='endYear'
                                 placeholder='End year (required)'
                             />
-                            <FormBtn 
-                            disabled={!(this.state.term)}
-                            onClick={this.handleFormSubmit}
+                            <FormBtn
+                                disabled={!(this.state.term && this.state.startYear && this.state.endYear)}
+                                onClick={this.handleFormSubmit}
                             >
-                            Submit search
+                                Submit search
                             </FormBtn>
                         </form>
                     </Col>
                 </Row>
-                <br/>
+                <br />
                 {/* <Results save={this.save} results={this.state.results} /> */}
                 {/* Going to add a bunch of code below to try and get the results to save in page instead of from an external component */}
                 <Row>
@@ -119,24 +118,24 @@ class Articles extends React.Component {
                             <i class="far fa-list-alt"></i>
                             </h2>
                             {this.state.results.length ? (
-                                  <div className="panel panel-primary">
-                                  <div className="panel-body">
-                                <List>
-                                    {this.state.results.map(article =>
-                                            <ListItem 
-                                            key={article._id}
-                                            title={article.headline.main}
-                                            date={article.pub_date}
-                                            url={article.web_url}
-                                            >
+                                <div className="panel panel-primary">
+                                    <div className="panel-body">
+                                        <List>
+                                            {this.state.results.map(article =>
+                                                <ListItem
+                                                    key={article._id}
+                                                    title={article.headline.main}
+                                                    date={article.pub_date}
+                                                    url={article.web_url}
+                                                >
                                                     <p>{(article.headline.main)}</p>
-                                                <p>{(article.pub_date)}</p>
-                                                <p><a href={(article.web_url)}> {(article.web_url)} </a></p>
-                                                <SaveBtn onClick={(event) => this.handleSaveArticle(article.headline.main, article.pub_date, article.web_url, event)} />
-                                            </ListItem>
-                                        )}
-                                </List>
-                                </div>
+                                                    <p>{(article.pub_date)}</p>
+                                                    <p><a href={(article.web_url)}> {(article.web_url)} </a></p>
+                                                    <SaveBtn onClick={(event) => this.handleSaveArticle(article.headline.main, article.pub_date, article.web_url, event)} />
+                                                </ListItem>
+                                            )}
+                                        </List>
+                                    </div>
                                 </div>
                             ) : (
                                     <h3>Sorry - no articles!

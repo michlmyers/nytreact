@@ -1,9 +1,7 @@
 import React from 'react';
 import { Col, Row, Container } from '../Grid';
 import Jumbotron from '../Jumbotron';
-// import { Link } from 'react-router-dom';
 
-// const Nav = () =>
 const Nav = () =>
 <Container>
 <Row>
