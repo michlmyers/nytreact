@@ -5,7 +5,6 @@ import { Input, FormBtn } from '../../components/Form';
 import './Articles.css';
 import SaveBtn from '../../components/SaveBtn';
 import { List, ListItem } from '../../components/List';
-// importing delete button during my test
 import DeleteBtn from '../../components/DeleteBtn';
 
 class Articles extends React.Component {
@@ -184,6 +183,13 @@ class Articles extends React.Component {
                                     <i class="fas fa-exclamation-triangle"></i>
                                     </h3>
                                 )}
+                        </div>
+                        <br />
+                        <div class="footer">
+                            <p> &copy; Copyright Michael Myers</p>
+                            <p>
+                                <a href="#top"> &lt; back to the top &gt; </a>
+                            </p>
                         </div>
                     </Col>
                 </Row>

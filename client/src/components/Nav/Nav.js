@@ -8,7 +8,7 @@ const Nav = () =>
 <Col size='md-10'>
 
     <Jumbotron>
-        <div class="shadow-lg p-3 mb-5 bg-white rounded">
+        <div class="shadow-lg p-2 mb-3 bg-white rounded">
         <h1>
         <i class="far fa-newspaper"></i> <br />
         NY Times Article Search!</h1>
