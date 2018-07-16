@@ -15,7 +15,7 @@ export default {
         return axios.get('/api/articles');
     },
     saveArticle: function(articleData) {
-        // problems here 
+        // saving articles now 
         console.log('here is some data: ' + articleData);
         return axios.post('/api/articles', articleData);
     },

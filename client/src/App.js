@@ -7,18 +7,19 @@ import './App.css';
 import Nav from './components/Nav';
 
 const App = () => (
-  <div>
-      <Nav/>
-      <Router>
+  <Router>
+    <div>
+      <Nav />
       <Switch>
-      <Route exact path='/' component={Articles} />
-      <Route path='/api/articles' component={Articles} />
-      <br/>
-      <Route path='/api/saved' component={Saved} />
-      <Route component={NoMatch} />
+        <Route exact path='/' component={Articles} />
+        {/* <Route exact path='/api/articles' component={Articles} /> */}
+        {/* put Saved under path='/saved' */}
+        {/* <Route path='/' component={Saved} /> */}
+        <Route exact path='/api/articles' component={Saved} />
+        <Route component={NoMatch} />
       </Switch>
-      </Router>
-  </div>
+    </div>
+  </Router>
 );
 
 export default App;

@@ -6,6 +6,7 @@ const articleFunctions = {
     findAll: function (req, res) {
         console.log("here")
         db.Article
+            // .find(req.query)
             .find(req.query)
             .sort({ date: -1 })
             .then(dbModel => res.json(dbModel))

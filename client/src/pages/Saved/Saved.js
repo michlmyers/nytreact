@@ -5,21 +5,16 @@ import './Saved.css';
 import { List, ListItem } from '../../components/List';
 import DeleteBtn from '../../components/DeleteBtn';
 
-class Search extends React.Component {
+class Articles extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             articles: [],
-            term: "",
-            startYear: "",
-            endYear: "",
-            title: "",
-            date: "",
-            url: ""
         };
     }
 
     componentDidMount() {
+        console.log('this saved page loads');
         this.loadArticles();
     }
 
@@ -32,7 +27,15 @@ class Search extends React.Component {
     deleteThisArticle = id => {
         API.deleteArticle(id)
             .then(res => this.loadArticles())
+            .then(console.log('article deleted!'))
             .catch(err => console.log(err));
+    };
+
+    handleInputChange = event => {
+        const { name, value } = event.target;
+        this.setState({
+            [name]: value
+        });
     };
 
     render() {
@@ -50,11 +53,10 @@ class Search extends React.Component {
                                     {this.state.articles.map(article => {
                                         return (
                                             <ListItem key={article._id}>
-                                                <a href={'/articles' + article._id}>
+                                                <a href={'/articles' + article._id}></a>
                                                     <p>{article.title}</p>
                                                     <p>{article.date}</p>
-                                                    <p>{article.url}</p>
-                                                </a>
+                                                    <p><a href={article.url}>{article.url}</a></p>
                                                 <DeleteBtn onClick={() => this.deleteThisArticle(article._id)} />
                                             </ListItem>
                                         );
@@ -74,4 +76,4 @@ class Search extends React.Component {
     }
 }
 
-export default Search;
+export default Articles;

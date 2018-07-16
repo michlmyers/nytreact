@@ -18,15 +18,16 @@ class Articles extends React.Component {
         };
     }
 
-    componentDidMount() {
-        this.loadArticles();
-    }
+    // componentDidMount() {
+    //     console.log('component mount from article.js');
+    //     // this.loadArticles();
+    // }
 
-    loadArticles = () => {
-        API.getArticles()
-            .then(res => this.setState({ articles: res.data.message }))
-            .catch(err => console.log(err));
-    };
+    // loadArticles = () => {
+    //     API.getArticles()
+    //         .then(res => this.setState({ articles: res.data.message }))
+    //         .catch(err => console.log(err));
+    // };
 
     // need to finish this function 
     handleInputChange = event => {
