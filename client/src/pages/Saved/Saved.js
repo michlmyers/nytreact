@@ -54,9 +54,9 @@ class Articles extends React.Component {
                                         return (
                                             <ListItem key={article._id}>
                                                 <a href={'/articles' + article._id}></a>
-                                                    <p>{article.title}</p>
-                                                    <p>{article.date}</p>
-                                                    <p><a href={article.url}>{article.url}</a></p>
+                                                <p>{article.title}</p>
+                                                <p>{article.date}</p>
+                                                <p><a href={article.url}>{article.url}</a></p>
                                                 <DeleteBtn onClick={() => this.deleteThisArticle(article._id)} />
                                             </ListItem>
                                         );

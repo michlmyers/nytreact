@@ -5,6 +5,8 @@ import { Input, FormBtn } from '../../components/Form';
 import './Articles.css';
 import SaveBtn from '../../components/SaveBtn';
 import { List, ListItem } from '../../components/List';
+// importing delete button during my test
+import DeleteBtn from '../../components/DeleteBtn';
 
 class Articles extends React.Component {
     constructor(props) {
@@ -18,18 +20,6 @@ class Articles extends React.Component {
         };
     }
 
-    // componentDidMount() {
-    //     console.log('component mount from article.js');
-    //     // this.loadArticles();
-    // }
-
-    // loadArticles = () => {
-    //     API.getArticles()
-    //         .then(res => this.setState({ articles: res.data.message }))
-    //         .catch(err => console.log(err));
-    // };
-
-    // need to finish this function 
     handleInputChange = event => {
         const { name, value } = event.target;
         this.setState({ [name]: value });
@@ -45,6 +35,7 @@ class Articles extends React.Component {
         })
             .then(res => console.log("saved the article"))
             .catch(err => console.log(err));
+        this.loadArticles();
     };
 
 
@@ -63,10 +54,30 @@ class Articles extends React.Component {
         }
     }
 
+    // going to add some functions BELOW this****************************************
+    componentDidMount() {
+        console.log('this saved page loads');
+        this.loadArticles();
+    }
+
+    loadArticles = () => {
+        API.getArticles()
+            .then(res => this.setState({ articles: res.data }))
+            .catch(err => console.log(err));
+    };
+
+    deleteThisArticle = id => {
+        API.deleteArticle(id)
+            .then(res => this.loadArticles())
+            .then(console.log('article deleted!'))
+            .catch(err => console.log(err));
+    };
+    // going to add some functions ABOVE this****************************************
+
     render() {
         return (
             <Container fluid>
-
+                {/* THIS BEGINS THE SEARCH FORM ********************************** */}
                 <Row>
                     <Col size='md-10'>
                         <form>
@@ -107,6 +118,7 @@ class Articles extends React.Component {
                     </Col>
                 </Row>
                 <br />
+                {/* THIS BEGINS THE SEARCH RESULTS ********************************** */}
                 <Row>
                     <Col size='md-10'>
                         <div className='resultsDiv'>
@@ -135,7 +147,7 @@ class Articles extends React.Component {
                                     </div>
                                 </div>
                             ) : (
-                                    <h3>Sorry - no articles!
+                                    <h3>Nothing here. Try searching!
                                         &nbsp;
                                     <i class="fas fa-exclamation-triangle"></i>
                                     </h3>
@@ -143,7 +155,38 @@ class Articles extends React.Component {
                         </div>
                     </Col>
                 </Row>
-
+                <br />
+                {/*  THIS -- SAVED ARTICLES******************************** */}
+                <Row>
+                    <Col size='md-10'>
+                        <div className='resultsDiv'>
+                            <h2>
+                                Saved Articles! &nbsp;
+                            <i class="fas fa-bookmark"></i>
+                            </h2>
+                            {this.state.articles.length ? (
+                                <List>
+                                    {this.state.articles.map(article => {
+                                        return (
+                                            <ListItem key={article._id}>
+                                                <a href={'/articles' + article._id}></a>
+                                                <p>{article.title}</p>
+                                                <p>{article.date}</p>
+                                                <p><a href={article.url}>{article.url}</a></p>
+                                                <DeleteBtn onClick={() => this.deleteThisArticle(article._id)} />
+                                            </ListItem>
+                                        );
+                                    })}
+                                </List>
+                            ) : (
+                                    <h3>No saved articles!
+                                        &nbsp;
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    </h3>
+                                )}
+                        </div>
+                    </Col>
+                </Row>
             </Container>
         );
     }
